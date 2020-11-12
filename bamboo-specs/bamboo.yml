@@ -1,0 +1,53 @@
+---
+version: 2
+plan:
+  project-key: CIP
+  key: CIP
+  name: ci-plan
+stages:
+- Default Stage:
+    manual: false
+    final: false
+    jobs:
+    - Default Job
+Default Job:
+  key: JOB1
+  tasks:
+  - checkout:
+      force-clean-build: 'false'
+  - script:
+      interpreter: SHELL
+      scripts:
+      - |-
+        echo "Hello, Slurm!"
+        ls -la
+        echo "The code is okay"
+triggers:
+- polling: 180
+branches:
+  create: manually
+  delete: never
+  link-to-jira: true
+notifications: []
+labels: []
+other:
+  concurrent-build-plugin: system-default
+---
+version: 2
+plan:
+  key: CIP-CIP
+plan-permissions:
+- users:
+  - ashvalov-edu
+  permissions:
+  - view
+  - edit
+  - build
+  - clone
+  - admin
+- roles:
+  - logged-in
+  - anonymous
+  permissions:
+  - view
+...
